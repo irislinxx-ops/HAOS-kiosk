@@ -687,5 +687,9 @@ else  ### Debug mode
     exec sleep infinite
 fi
 
+# Install smbus2 for I2C fan control, then launch
+pip3 install smbus2 -q &
+pip3 install RPi.GPIO -q 2>/dev/null &
+sleep 5
 # Launch Argon ONE fan controller
 python3 /usr/bin/argon-fan.py &
