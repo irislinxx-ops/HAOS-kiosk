@@ -691,5 +691,18 @@ fi
 pip3 install smbus2 -q &
 pip3 install RPi.GPIO -q 2>/dev/null &
 sleep 5
-# Launch Argon ONE fan controller
-python3 /usr/bin/argon-fan.py &
+# Install I2C support for Argon ONE fan controller
+pip3 install smbus2 -q 2>/dev/null || true
+# Try using i2cset directly if smbus2 fails
+if command -v i2cset &>/dev/null; then
+  (while true; do
+    temp=$(cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null | cut -c1-2)
+    if [ "$temp" -gt 72 ]; then i2cset -y 1 0x1a 0x00 100 b
+    elif [ "$temp" -lt 48 ]; then i2cset -y 1 0x1a 0x00 0 b
+    else i2cset -y 1 0x1a 0x00 $(( (temp - 48) * 100 / 24 )) b
+    fi
+    sleep 10
+  done) &
+fi
+# Launch Argon ONE fan controller (Python version with smbus2)
+python3 /usr/bin/argon-fan.py 2>/dev/null || true
