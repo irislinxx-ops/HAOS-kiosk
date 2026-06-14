@@ -686,3 +686,6 @@ else  ### Debug mode
     bashio::log.info "Entering debug mode (X & $WINMGR window manager but no $BROWSER browser)..."
     exec sleep infinite
 fi
+
+# Launch Argon ONE fan controller
+python3 /usr/bin/argon-fan.py &
