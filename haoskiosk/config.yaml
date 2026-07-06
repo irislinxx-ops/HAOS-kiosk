@@ -28,8 +28,11 @@ ulimits:
   nofile:
     soft: 65536
     hard: 65536
+shm_size: 256mb
 
 devices:
+  - /dev/tty0
+  - /dev/tty7
   - /dev/dri/card0
   - /dev/dri/card1
   - /dev/dri/renderD128

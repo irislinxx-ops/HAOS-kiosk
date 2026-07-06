@@ -56,7 +56,12 @@
 #       [If not in DEBUG_MODE; Otherwise, just sleep]
 #
 ################################################################################
-echo "."  # Almost blank line (Note totally blank or white space lines are swallowed)
+echo "."  # Almost blank line
+
+# Start system dbus (needed with full_access)
+dbus-uuidgen --ensure 2>/dev/null || true
+dbus-daemon --system 2>/dev/null || true
+ (Note totally blank or white space lines are swallowed)
 printf '%*s\n' 80 '' | tr ' ' '#'  # Separator
 bashio::log.info "######## Starting HAOSKiosk ########"
 bashio::log.info "$(date) [Version: $ADDON_VERSION]"

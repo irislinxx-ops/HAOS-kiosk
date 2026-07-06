@@ -14,7 +14,7 @@ ENV ADDON_VERSION=${BUILD_VERSION}
 
 #===============================================================================
 ##### Install X, Browser and all necessary dependencies
-RUN apk update && apk add --no-cache \
+RUN apk update && apk upgrade && apk add --no-cache \
 ## Xserver and graphics
      xorg-server \
      xf86-video-modesetting \
@@ -54,6 +54,9 @@ RUN apk update && apk add --no-cache \
 #    py3-pip \
     py3-aiohttp \
     py3-xlib \
+### D-Bus
+     dbus \
+     dbus-x11 \
 ### Sound
      pulseaudio-utils \
 #     alsa-utils alsa-plugins-pulse \
